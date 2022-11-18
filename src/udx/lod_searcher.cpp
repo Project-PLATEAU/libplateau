@@ -67,6 +67,10 @@ LodFlag LodSearcher::searchLodsInFile(const fs::path& file_path) {
     return searchLods(ifs);
 }
 
+LodFlag LodSearcher::searchLodsInFile2(const std::string& file_path) {
+    return searchLodsInFile(fs::u8path(file_path));
+}
+
 
 namespace {
     void throwIfOutOfRange(unsigned digit) {

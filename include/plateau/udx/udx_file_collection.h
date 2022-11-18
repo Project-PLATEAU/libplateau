@@ -149,6 +149,8 @@ namespace plateau::udx {
          */
         std::shared_ptr<std::vector<std::string>> getGmlFiles(PredefinedCityModelPackage package);
 
+        std::shared_ptr<std::string> getGmlFile(const MeshCode& mesh_code, PredefinedCityModelPackage package);
+
         /**
          * \brief packageに該当するCityGMLファイルの個数を取得します。
          * \param package 都市モデルパッケージ

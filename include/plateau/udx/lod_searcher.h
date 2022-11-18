@@ -14,6 +14,7 @@ namespace plateau::udx {
     class LIBPLATEAU_EXPORT LodSearcher {
     public:
         static plateau::udx::LodFlag searchLodsInFile(const std::filesystem::path& file_path);
+        static plateau::udx::LodFlag searchLodsInFile2(const std::string& file_path);
     };
 
     /// どのLODが含まれるかをフラグ(unsigned)で表現します。

@@ -89,6 +89,12 @@ namespace plateau::udx {
         return result;
     }
 
+    std::shared_ptr<std::vector<MeshCode>> MeshCode::getThirdMeshes(const geometry::Extent& extent) {
+        auto result = std::make_shared<std::vector<MeshCode>>();
+        getThirdMeshes(extent, *result);
+        return result;
+    }
+
     void MeshCode::getThirdMeshes(const geometry::Extent& extent, std::vector<MeshCode>& mesh_codes) {
         auto min_mesh = getThirdMesh(extent.min);
         const auto max_mesh = getThirdMesh(extent.max);

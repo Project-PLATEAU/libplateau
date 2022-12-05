@@ -181,6 +181,16 @@ namespace plateau::udx {
         return result;
     }
 
+    std::shared_ptr<std::string> UdxFileCollection::getGmlFile(const MeshCode& mesh_code,
+        PredefinedCityModelPackage package)
+    {
+        if (files_.find(package) == files_.end())
+            return nullptr;
+
+        const auto result = std::make_shared<std::string>();
+
+    }
+
     // fetch で使う無名関数
     namespace {
         using ConstStrIterT = decltype(std::string("a").cbegin());

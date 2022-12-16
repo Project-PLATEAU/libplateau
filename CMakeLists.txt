@@ -66,30 +66,34 @@ endif()
 add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
 add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
-## ユニットテスト
-add_subdirectory("test")
+if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS")
+  ## ユニットテスト
+  add_subdirectory("test")
 
-# dependencies
-## Xerces-C をビルドします。
-### libcitygmlのFindXercesを通すために全てキャッシュ化
-set(BUILD_SHARED_LIBS false CACHE BOOL "" FORCE)
-add_subdirectory("3rdparty/xerces-c")
-set(XERCESC_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/xerces-c/src" "${libplateau_BINARY_DIR}/3rdparty/xerces-c/src" CACHE STRING "" FORCE)
-set(XERCESC_LIBRARY xerces-c CACHE STRING "" FORCE)
+  # dependencies
+  ## Xerces-C をビルドします。
+  ### libcitygmlのFindXercesを通すために全てキャッシュ化
+  set(BUILD_SHARED_LIBS false CACHE BOOL "" FORCE)
+  add_subdirectory("3rdparty/xerces-c")
+  set(XERCESC_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/xerces-c/src" "${libplateau_BINARY_DIR}/3rdparty/xerces-c/src" CACHE STRING "" FORCE)
+  set(XERCESC_LIBRARY xerces-c CACHE STRING "" FORCE)
 
-## libcitygml をビルドします。
-### TODO: GDAL Support
-set(LIBCITYGML_USE_GDAL OFF CACHE BOOL "" FORCE)
-### libcitygmlのFindXercesを通すために手動で設定
-set(XERCESC_WAS_STATIC ON CACHE BOOL "" FORCE)
+  ## libcitygml をビルドします。
+  ### TODO: GDAL Support
+  set(LIBCITYGML_USE_GDAL OFF CACHE BOOL "" FORCE)
+  ### libcitygmlのFindXercesを通すために手動で設定
+  set(XERCESC_WAS_STATIC ON CACHE BOOL "" FORCE)
 
-set(LIBCITYGML_DYNAMIC OFF CACHE BOOL "" FORCE)
-add_subdirectory("3rdparty/libcitygml")
-set(LIBCITYGML_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/libcitygml/sources/include")
+  set(LIBCITYGML_DYNAMIC OFF CACHE BOOL "" FORCE)
+  add_subdirectory("3rdparty/libcitygml")
+  set(LIBCITYGML_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/libcitygml/sources/include")
+endif()
 
-## glTF-SDK
-add_subdirectory("3rdparty/glTF-SDK")
-set(GLTFSDK_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/glTF-SDK/glTF-SDK/GLTFSDK/Inc")
+if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS")
+  ## glTF-SDK
+  add_subdirectory("3rdparty/glTF-SDK")
+  set(GLTFSDK_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/glTF-SDK/glTF-SDK/GLTFSDK/Inc")
+endif()
 
 # FBX SDK 以下のディレクトリで debug と release のどちらを利用するか決めます。
 # debug なら debug/*-md.lib を使い、release なら release/*-mt.lib を使います。
@@ -173,12 +177,14 @@ add_subdirectory("3rdparty/openssl-cmake")
 
 # libplateau をビルドします。
 add_subdirectory("src")
-## Examples
-add_subdirectory("examples/log_skipped_elements")
-add_subdirectory("examples/export_obj")
-add_subdirectory("examples/export_gltf")
-add_subdirectory("examples/export_fbx")
-add_subdirectory("examples/https_mock_test")
+if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS")
+  ## Examples
+  add_subdirectory("examples/log_skipped_elements")
+  add_subdirectory("examples/export_obj")
+  add_subdirectory("examples/export_gltf")
+  add_subdirectory("examples/export_fbx")
+  add_subdirectory("examples/https_mock_test")
+endif()
 
 # python
 option(BUILD_PYTHON "Build python wrapper" OFF)

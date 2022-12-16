@@ -1,6 +1,7 @@
 #pragma once
 
-#include <citygml/vecs.hpp>
+//#include <citygml/vecs.hpp>
+#include "vectors.h"
 #include "geo_coordinate.h"
 #include <libplateau_api.h>
 

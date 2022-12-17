@@ -59,7 +59,7 @@ namespace plateau::polygonMesh {
         if (!envelope.validBounds()) {
             return TVec3d{0, 0, 0};
         }
-        auto city_center = ((plateau::geometry::Vector3d)envelope.getLowerBound() + (plateau::geometry::Vector3d)envelope.getUpperBound()) / 2.0;
+        plateau::geometry::Vector3d city_center = ((plateau::geometry::Vector3d)envelope.getLowerBound() + (plateau::geometry::Vector3d)envelope.getUpperBound()) / 2.0;
         return geometry::GeoReference(coordinate_zone_id).project(city_center);
     }
 

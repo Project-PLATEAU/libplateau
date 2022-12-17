@@ -3,7 +3,7 @@
 #include "plateau/mesh_writer/obj_writer.h"
 
 namespace plateau::geometry {
-    GeoReference::GeoReference(int coordinate_zone_id, const TVec3d& reference_point, float unit_scale,
+    GeoReference::GeoReference(int coordinate_zone_id, const Vector3d& reference_point, float unit_scale,
                                CoordinateSystem coordinate_system) :
         reference_point_(reference_point),
         coordinate_system_(coordinate_system),
@@ -11,29 +11,29 @@ namespace plateau::geometry {
         zone_id_(coordinate_zone_id) {
     }
 
-    TVec3d GeoReference::project(const GeoCoordinate& point) const {
+    Vector3d GeoReference::project(const GeoCoordinate& point) const {
         double lat_lon[3] = { point.latitude, point.longitude, point.height };
         return project(lat_lon);
     }
 
-    TVec3d GeoReference::project(const TVec3d& lat_lon) const {
-        TVec3d point = lat_lon;
+    Vector3d GeoReference::project(const Vector3d& lat_lon) const {
+        Vector3d point = lat_lon;
         PolarToPlaneCartesian().project(point, zone_id_);
-        TVec3 converted_point = convertAxisFromENUTo(coordinate_system_, point);
+        Vector3 converted_point = convertAxisFromENUTo(coordinate_system_, point);
         converted_point = converted_point / unit_scale_ - reference_point_;
         return converted_point;
     }
 
-    TVec3d GeoReference::projectWithoutAxisConvert(const TVec3d& lat_lon) const {
+    Vector3d GeoReference::projectWithoutAxisConvert(const Vector3d& lat_lon) const {
         // 前提として、座標軸は 変換前 ENU → 変換後 ENU であるとします。
         // そのため reference_point_ の代わりに reference_point_ を ENU に変換した値が利用されます。
-        TVec3d point = lat_lon;
+        Vector3d point = lat_lon;
         PolarToPlaneCartesian().project(point, zone_id_);
-        TVec3 converted_point = point / unit_scale_ - convertAxisToENU(coordinate_system_, reference_point_);
+        Vector3 converted_point = point / unit_scale_ - convertAxisToENU(coordinate_system_, reference_point_);
         return converted_point;
     }
 
-    TVec3d GeoReference::convertAxisFromENUTo(CoordinateSystem axis, const TVec3d& vertex) {
+    Vector3d GeoReference::convertAxisFromENUTo(CoordinateSystem axis, const Vector3d& vertex) {
         switch (axis) {
         case CoordinateSystem::ENU:
             return vertex; // 変換なし
@@ -48,7 +48,7 @@ namespace plateau::geometry {
         }
     }
 
-    TVec3d GeoReference::convertAxisToENU(CoordinateSystem axis, const TVec3d& vertex) {
+    Vector3d GeoReference::convertAxisToENU(CoordinateSystem axis, const Vector3d& vertex) {
         switch (axis) {
         case CoordinateSystem::ENU:
             // 変換なし
@@ -67,11 +67,11 @@ namespace plateau::geometry {
         }
     }
 
-    void GeoReference::setReferencePoint(TVec3d point) {
+    void GeoReference::setReferencePoint(Vector3d point) {
         reference_point_ = point;
     }
 
-    TVec3d GeoReference::getReferencePoint() const {
+    Vector3d GeoReference::getReferencePoint() const {
         return reference_point_;
     }
 
@@ -91,9 +91,9 @@ namespace plateau::geometry {
         return coordinate_system_;
     }
 
-    GeoCoordinate GeoReference::unproject(const TVec3d& point) const {
-        TVec3d before_convert_lat_lon = (point + reference_point_) * unit_scale_;
-        TVec3d lat_lon = convertAxisToENU(coordinate_system_, before_convert_lat_lon);
+    GeoCoordinate GeoReference::unproject(const Vector3d& point) const {
+        Vector3d before_convert_lat_lon = (point + reference_point_) * unit_scale_;
+        Vector3d lat_lon = convertAxisToENU(coordinate_system_, before_convert_lat_lon);
         PolarToPlaneCartesian().unproject(lat_lon, zone_id_);
         return GeoCoordinate(lat_lon.x, lat_lon.y, lat_lon.z);
     }

@@ -16,7 +16,7 @@ protected:
     const std::string gml_path_ = "../data/udx/bldg/53392642_bldg_6697_op2.gml";
     std::shared_ptr<const CityModel> city_model_ = load(gml_path_, params_);
     const MeshExtractOptions mesh_extract_options_ = MeshExtractOptions();
-    const GeoReference geo_reference_ = GeoReference(mesh_extract_options_.coordinate_zone_id, mesh_extract_options_.reference_point,
+    const GeoReference geo_reference_ = GeoReference(mesh_extract_options_.coordinate_zone_id, (plateau::geometry::Vector3d)mesh_extract_options_.reference_point,
                                                      mesh_extract_options_.unit_scale, mesh_extract_options_.mesh_axes);
 };
 

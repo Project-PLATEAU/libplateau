@@ -138,8 +138,8 @@ namespace plateau::polygonMesh {
             out_vertices = std::vector<TVec3d>();
             out_vertices.reserve(vertices_lat_lon->size());
             for (const auto& lat_lon : *vertices_lat_lon) {
-                auto xyz = geo_reference.projectWithoutAxisConvert(lat_lon);
-                out_vertices.push_back(xyz);
+                auto xyz = geo_reference.projectWithoutAxisConvert((Vector3d)lat_lon);
+                out_vertices.push_back((TVec3d)xyz);
             }
             assert(out_vertices.size() == vertices_lat_lon->size());
 
@@ -315,9 +315,9 @@ namespace plateau::polygonMesh {
         for (int i = 0; i < vertex_count; i++) {
             const auto& before = vs.at(i);
             // BEFORE → ENU
-            const auto enu = GeoReference::convertAxisToENU(mesh_axis_convert_from, before);
+            const auto enu = GeoReference::convertAxisToENU(mesh_axis_convert_from, (Vector3d)before);
             // ENU → AFTER
-            vs.at(i) = GeoReference::convertAxisFromENUTo(mesh_axis_convert_to, enu);
+            vs.at(i) = (TVec3d)GeoReference::convertAxisFromENUTo(mesh_axis_convert_to, enu);
         }
 
         const Mesh other_mesh(std::move(vs), std::move(indices), std::move(uv_1), std::move(sub_meshes));

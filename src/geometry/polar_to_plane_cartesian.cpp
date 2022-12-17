@@ -2,7 +2,7 @@
 #include <cmath>
 
 namespace plateau::geometry {
-    void PolarToPlaneCartesian::project(TVec3d& position, int cartesian_coordinate_system_id) {
+    void PolarToPlaneCartesian::project(Vector3d& position, int cartesian_coordinate_system_id) {
         double xyz[3];
         xyz[0] = position.x;
         xyz[1] = position.y;
@@ -81,7 +81,7 @@ namespace plateau::geometry {
      * 平面直角座標系を緯度経度座標系に変換します。
      *
      */
-    void PolarToPlaneCartesian::unproject(TVec3d& lat_lon, int num) {
+    void PolarToPlaneCartesian::unproject(Vector3d& lat_lon, int num) {
         jt_ = 5;
         double x = lat_lon.y, y = lat_lon.x;
 

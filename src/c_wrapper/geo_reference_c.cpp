@@ -6,7 +6,7 @@ using namespace plateau::geometry;
 extern "C" {
     LIBPLATEAU_C_EXPORT APIResult LIBPLATEAU_C_API plateau_create_geo_reference(
             GeoReference** out_geo_reference,
-            TVec3d reference_point,
+            Vector3d reference_point,
             float unit_scale,
             CoordinateSystem coordinate_system,
             int zone_id
@@ -23,7 +23,7 @@ extern "C" {
 
     DLL_VALUE_FUNC(plateau_geo_reference_project,
                    GeoReference,
-                   TVec3d,
+                   Vector3d,
                    handle->project(lat_lon),
                    , GeoCoordinate lat_lon)
 
@@ -31,11 +31,11 @@ extern "C" {
                GeoReference,
                GeoCoordinate,
                handle->unproject(point),
-               , TVec3d point)
+               , Vector3d point)
 
     DLL_VALUE_FUNC(plateau_geo_reference_get_reference_point,
                   GeoReference,
-                  TVec3d,
+                  Vector3d,
                   handle->getReferencePoint())
 
     DLL_VALUE_FUNC(plateau_geo_reference_get_zone_id,

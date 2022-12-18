@@ -64,7 +64,7 @@ namespace plateau::dataset {
         auto num = (double)getMeshCodes().size();
         geometry::GeoCoordinate geo_average = geometry::GeoCoordinate(lat_sum / num, lon_sum / num, height_sum / num);
         auto euclid_average = geo_reference.project(geo_average);
-        return euclid_average;
+        return (TVec3d)euclid_average;
     }
 
     PredefinedCityModelPackage ServerDatasetAccessor::getPackages() {

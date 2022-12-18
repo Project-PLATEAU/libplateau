@@ -86,8 +86,9 @@ if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS")
 
   set(LIBCITYGML_DYNAMIC OFF CACHE BOOL "" FORCE)
   add_subdirectory("3rdparty/libcitygml")
-  set(LIBCITYGML_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/libcitygml/sources/include")
 endif()
+set(LIBCITYGML_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/libcitygml/sources/include")
+
 
 if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS")
   ## glTF-SDK

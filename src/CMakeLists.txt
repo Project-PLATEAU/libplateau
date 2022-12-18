@@ -1,12 +1,12 @@
 add_compile_definitions(LIBPLATEAU_BUILD)
 
-
 add_library(plateau SHARED "")
-target_link_libraries(plateau PUBLIC citygml xerces-c GLTFSDK crypto ssl "${FBXSDK_LIBRARIES}" LibXml2 "${ZLIB_LIBRARY}")
 if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS")
   target_include_directories(plateau PUBLIC "${CMAKE_SOURCE_DIR}/include" "${LIBCITYGML_INCLUDE}" "${GLTFSDK_INCLUDE}" "${CPPHTTPLIB_INCLUDE}" "${FBXSDK_INCLUDE}")
+  target_link_libraries(plateau PUBLIC citygml xerces-c GLTFSDK crypto ssl "${FBXSDK_LIBRARIES}" LibXml2 "${ZLIB_LIBRARY}")
 else()
-  target_include_directories(plateau PUBLIC "${CMAKE_SOURCE_DIR}/include/geometry" "${CPPHTTPLIB_INCLUDE}" "${FBXSDK_INCLUDE}")
+  target_include_directories(plateau PUBLIC "${CMAKE_SOURCE_DIR}/include" "${LIBCITYGML_INCLUDE}" "${CPPHTTPLIB_INCLUDE}" "${FBXSDK_INCLUDE}")
+  target_link_libraries(plateau PUBLIC crypto ssl "${FBXSDK_LIBRARIES}" LibXml2 "${ZLIB_LIBRARY}")
 endif()
 
 set_target_properties(plateau PROPERTIES RUNTIME_OUTPUT_DIRECTORY
@@ -21,8 +21,9 @@ if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS")
   add_subdirectory(c_wrapper)
   add_subdirectory(dataset)
   add_subdirectory(network)
+  target_link_libraries(plateau PUBLIC c_wrapper)
 else()
   set_target_properties(plateau PROPERTIES FRAMEWORK TRUE)
 endif()
 
-target_link_libraries(plateau PUBLIC c_wrapper)
+

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "citygml/vecs.hpp"
+//#include "citygml/vecs.hpp"
+#include "vectors.h"
 #include "citygml/cityobject.h"
 
 
@@ -66,7 +67,7 @@ namespace plateau::geometry {
         }
 
         bool contains(GeoCoordinate point) const;
-        bool contains(TVec3d point) const;
+        bool contains(Vector3d point) const;
 
         /**
          * 引数 city_obj の位置を推定し、その位置が Extent の範囲内に含まれるかどうかを返します。

@@ -42,7 +42,7 @@ namespace plateau::polygonMesh {
             next_vertex_ids.reserve(src_vertices.size());
             unsigned long long removed_count = 0;
             for (auto i = 0; i < src_vertices_count; i++) {
-                bool in_range = extent.contains(src_vertices.at(i));
+                bool in_range = extent.contains((Vector3d)src_vertices.at(i));
                 if (in_range) {
                     next_vertex_ids.push_back((long long)(i)-removed_count);
                     assert(i >= removed_count);
